@@ -30,12 +30,6 @@ class AppLocalizationsDa extends AppLocalizations {
   String get pageHomeTitle => 'Hjem';
 
   @override
-  String get jumpToMonthTitle => 'Jump to month';
-
-  @override
-  String get jumpToLogTitle => 'Jump to log';
-
-  @override
   String get flashbacksTitle => 'Minder';
 
   @override
@@ -169,24 +163,6 @@ class AppLocalizationsDa extends AppLocalizations {
   String chartOverTimeTitle(Object tag) {
     return '$tag Over Time';
   }
-
-  @override
-  String get chartGroupingLabel => 'Group by';
-
-  @override
-  String get chartGroupingDay => 'Day';
-
-  @override
-  String get chartGroupingWeek => 'Week';
-
-  @override
-  String get chartGroupingMonth => 'Month';
-
-  @override
-  String get chartGroupingYear => 'Year';
-
-  @override
-  String get chartSmoothingLabel => 'Smoothing';
 
   @override
   String streakCurrent(num count) {
@@ -639,4 +615,11 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get tagMoodTitle => 'Humør';
+
+  @override
+  String get templateDefaultDailyConnectionsTitle =>
+      'Daily Connections for BPD';
+
+  @override
+  String get templateDefaultDailyConnectionsBody => '';
 }

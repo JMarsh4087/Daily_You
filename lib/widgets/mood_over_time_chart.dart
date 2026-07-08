@@ -1,7 +1,6 @@
 import 'package:daily_you/config_provider.dart';
 import 'package:daily_you/models/entry.dart';
 import 'package:daily_you/time_manager.dart';
-import 'package:daily_you/widgets/connected_button_group.dart';
 import 'package:daily_you/widgets/mood_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:daily_you/l10n/generated/app_localizations.dart';
@@ -10,9 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shamsi_date/shamsi_date.dart';
 
-enum ChartGrouping { day, week, month, year }
-
-class MoodOverTimeChart extends StatefulWidget {
+class MoodOverTimeChart extends StatelessWidget {
   final List<Entry> entries;
   final bool hasData;
 
@@ -22,11 +19,6 @@ class MoodOverTimeChart extends StatefulWidget {
     required this.hasData,
   });
 
-  @override
-  State<MoodOverTimeChart> createState() => _MoodOverTimeChartState();
-}
-
-class _MoodOverTimeChartState extends State<MoodOverTimeChart> {
   static const _dummyYValues = [
     -0.5,
     -0.4,
@@ -74,75 +66,6 @@ class _MoodOverTimeChartState extends State<MoodOverTimeChart> {
   static const int _monthThreshold = 35; // Catches 31-day months easily
   static const int _yearThreshold = 366; // Catches leap years
 
-  ChartGrouping? get _preferredGrouping {
-    final value = ConfigProvider.instance.get(ConfigKey.moodOverTimeGrouping);
-    return switch (value) {
-      'day' => ChartGrouping.day,
-      'week' => ChartGrouping.week,
-      'month' => ChartGrouping.month,
-      'year' => ChartGrouping.year,
-      _ => null,
-    };
-  }
-
-  bool get _smoothing =>
-      ConfigProvider.instance.get(ConfigKey.moodOverTimeSmoothing) ?? true;
-
-  static String _groupingToConfigString(ChartGrouping g) => switch (g) {
-        ChartGrouping.day => 'day',
-        ChartGrouping.week => 'week',
-        ChartGrouping.month => 'month',
-        ChartGrouping.year => 'year',
-      };
-
-  List<ChartGrouping> _availableGroupings(int spanDays) {
-    if (spanDays <= _monthThreshold) {
-      return [ChartGrouping.day, ChartGrouping.week];
-    }
-    if (spanDays <= _yearThreshold) {
-      return [ChartGrouping.week, ChartGrouping.month];
-    }
-    if (spanDays <= 2 * _yearThreshold) {
-      return [ChartGrouping.week, ChartGrouping.month];
-    }
-    return [ChartGrouping.month, ChartGrouping.year];
-  }
-
-  ChartGrouping _defaultGrouping(int spanDays) =>
-      spanDays <= _yearThreshold ? ChartGrouping.week : ChartGrouping.month;
-
-  ChartGrouping _effectiveGrouping(int spanDays) {
-    final available = _availableGroupings(spanDays);
-    final pref = _preferredGrouping;
-    if (pref == null) return _defaultGrouping(spanDays);
-    if (available.contains(pref)) return pref;
-    // Clamp to nearest available grouping (prefer coarser to match why it was unavailable)
-    const order = [
-      ChartGrouping.day,
-      ChartGrouping.week,
-      ChartGrouping.month,
-      ChartGrouping.year
-    ];
-    final idx = order.indexOf(pref);
-    for (int i = idx + 1; i < order.length; i++) {
-      if (available.contains(order[i])) return order[i];
-    }
-    for (int i = idx - 1; i >= 0; i--) {
-      if (available.contains(order[i])) return order[i];
-    }
-    return available.first;
-  }
-
-  String _groupingLabel(ChartGrouping g, BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    return switch (g) {
-      ChartGrouping.day => l10n.chartGroupingDay,
-      ChartGrouping.week => l10n.chartGroupingWeek,
-      ChartGrouping.month => l10n.chartGroupingMonth,
-      ChartGrouping.year => l10n.chartGroupingYear,
-    };
-  }
-
   @override
   Widget build(BuildContext context) {
     final _ = context.watch<ConfigProvider>();
@@ -151,26 +74,19 @@ class _MoodOverTimeChartState extends State<MoodOverTimeChart> {
     final today = DateTime.now();
     final rangeEnd = DateTime(today.year, today.month, today.day, 23, 59, 59);
     final rangeStart =
-        widget.hasData ? _dataRangeStart() : _dummyRangeStart(today, isJalali);
+        hasData ? _dataRangeStart() : _dummyRangeStart(today, isJalali);
 
     final totalDays = rangeEnd.difference(rangeStart).inDays.toDouble();
     final spanDays = totalDays.toInt().clamp(1, 999999);
-    final available = _availableGroupings(spanDays);
-    final effective = _effectiveGrouping(spanDays);
-    final smoothing = _smoothing;
+    final useWeekly = spanDays <= 365;
 
-    final buckets = switch (effective) {
-      ChartGrouping.day => _generateDailyBuckets(rangeStart, rangeEnd),
-      ChartGrouping.week => _generateWeeklyBuckets(rangeStart, rangeEnd),
-      ChartGrouping.month =>
-        _generateMonthlyBuckets(rangeStart, rangeEnd, isJalali: isJalali),
-      ChartGrouping.year =>
-        _generateYearlyBuckets(rangeStart, rangeEnd, isJalali: isJalali),
-    };
+    final buckets = useWeekly
+        ? _generateWeeklyBuckets(rangeStart, rangeEnd)
+        : _generateMonthlyBuckets(rangeStart, rangeEnd, isJalali: isJalali);
 
     if (buckets.isEmpty) return const SizedBox.shrink();
 
-    final spots = widget.hasData
+    final spots = hasData
         ? _computeSpots(buckets, rangeStart)
         : _dummySpots(buckets, rangeStart);
 
@@ -205,14 +121,10 @@ class _MoodOverTimeChartState extends State<MoodOverTimeChart> {
                 maxX: totalDays,
                 minY: -2,
                 maxY: 2,
-                clipData: const FlClipData.all(),
                 lineTouchData: const LineTouchData(enabled: false),
-                lineBarsData: widget.hasData
-                    ? _buildSegments(spots, color, smoothing)
-                    : [
-                        _makeSegment(spots.whereType<FlSpot>().toList(), color,
-                            smoothing)
-                      ],
+                lineBarsData: hasData
+                    ? _buildSegments(spots, color)
+                    : [_makeSegment(spots.whereType<FlSpot>().toList(), color)],
                 extraLinesData: ExtraLinesData(
                   verticalLines: markerDayOffsets
                       .map((x) => VerticalLine(
@@ -293,38 +205,24 @@ class _MoodOverTimeChartState extends State<MoodOverTimeChart> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 4.0, right: 4.0),
-            child: Row(
-              children: [
-                const SizedBox(width: 48),
-                Expanded(
-                  child: Center(
-                    child: Text(
-                      AppLocalizations.of(context)!.chartOverTimeTitle(
-                          AppLocalizations.of(context)!.tagMoodTitle),
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-                IconButton(
-                  visualDensity: VisualDensity.compact,
-                  icon: const Icon(Icons.tune, size: 20),
-                  tooltip: AppLocalizations.of(context)!.chartGroupingLabel,
-                  onPressed: () =>
-                      _showGroupingDialog(context, available, effective),
-                ),
-              ],
+            padding: const EdgeInsets.only(top: 4.0),
+            child: Center(
+              child: Text(
+                AppLocalizations.of(context)!.chartOverTimeTitle(
+                    AppLocalizations.of(context)!.tagMoodTitle),
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
             ),
           ),
           Stack(
             alignment: Alignment.center,
             children: [
               Opacity(
-                opacity: widget.hasData ? 1.0 : 0.3,
+                opacity: hasData ? 1.0 : 0.3,
                 child: Center(child: chartWidget),
               ),
-              if (!widget.hasData)
+              if (!hasData)
                 Text(
                   AppLocalizations.of(context)!.statisticsNotEnoughData,
                   style: TextStyle(
@@ -340,80 +238,8 @@ class _MoodOverTimeChartState extends State<MoodOverTimeChart> {
     );
   }
 
-  void _showGroupingDialog(BuildContext context, List<ChartGrouping> available,
-      ChartGrouping effective) {
-    var selected = effective;
-    showDialog(
-      context: context,
-      builder: (dialogContext) => StatefulBuilder(
-        builder: (context, setDialogState) {
-          final l10n = AppLocalizations.of(context)!;
-          final smoothingValue = _smoothing;
-          final screenWidth = MediaQuery.of(context).size.width;
-          final dialogWidth = (screenWidth - 80).clamp(240.0, 360.0);
-          return Dialog(
-            child: SizedBox(
-              width: dialogWidth,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(24, 16, 24, 8),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(
-                      children: [
-                        Text(l10n.chartGroupingLabel,
-                            style: Theme.of(context).textTheme.bodyLarge),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: ConnectedButtonGroup(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            labels: available
-                                .map((g) => _groupingLabel(g, context))
-                                .toList(),
-                            selectedIndex: available.indexOf(selected),
-                            onSelectionChanged: (i) {
-                              final g = available[i];
-                              setDialogState(() => selected = g);
-                              ConfigProvider.instance.set(
-                                  ConfigKey.moodOverTimeGrouping,
-                                  _groupingToConfigString(g));
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    SwitchListTile(
-                      contentPadding: EdgeInsets.zero,
-                      title: Text(l10n.chartSmoothingLabel),
-                      value: smoothingValue,
-                      onChanged: (v) {
-                        setDialogState(() {});
-                        ConfigProvider.instance
-                            .set(ConfigKey.moodOverTimeSmoothing, v);
-                      },
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        TextButton(
-                          onPressed: () => Navigator.of(dialogContext).pop(),
-                          child: Text(MaterialLocalizations.of(context)
-                              .closeButtonLabel),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-
   DateTime _dataRangeStart() {
-    return widget.entries
+    return entries
         .where((e) => e.mood != null)
         .map((e) => e.timeCreate)
         .reduce((a, b) => a.isBefore(b) ? a : b)
@@ -428,16 +254,6 @@ class _MoodOverTimeChartState extends State<MoodOverTimeChart> {
       return DateTime(dt.year, dt.month, dt.day);
     }
     return DateTime(today.year, today.month - 12, today.day);
-  }
-
-  List<DateTime> _generateDailyBuckets(DateTime start, DateTime end) {
-    final buckets = <DateTime>[];
-    DateTime current = DateTime(start.year, start.month, start.day);
-    while (!current.isAfter(end)) {
-      buckets.add(current);
-      current = current.add(const Duration(days: 1));
-    }
-    return buckets;
   }
 
   List<DateTime> _generateWeeklyBuckets(DateTime start, DateTime end) {
@@ -475,30 +291,10 @@ class _MoodOverTimeChartState extends State<MoodOverTimeChart> {
     return buckets;
   }
 
-  List<DateTime> _generateYearlyBuckets(DateTime start, DateTime end,
-      {bool isJalali = false}) {
-    final buckets = <DateTime>[];
-    if (isJalali) {
-      final jStart = Jalali.fromDateTime(start);
-      Jalali current = Jalali(jStart.year, 1, 1);
-      while (!current.toDateTime().isAfter(end)) {
-        buckets.add(current.toDateTime());
-        current = Jalali(current.year + 1, 1, 1);
-      }
-      return buckets;
-    }
-    DateTime current = DateTime(start.year, 1, 1);
-    while (!current.isAfter(end)) {
-      buckets.add(current);
-      current = DateTime(current.year + 1, 1, 1);
-    }
-    return buckets;
-  }
-
   List<FlSpot?> _computeSpots(List<DateTime> buckets, DateTime rangeStart) {
     final Map<int, List<double>> bucketMoods = {};
 
-    for (final entry in widget.entries) {
+    for (final entry in entries) {
       if (entry.mood == null) continue;
       final entryDate = entry.timeCreate;
       int bucketIndex = -1;
@@ -530,42 +326,30 @@ class _MoodOverTimeChartState extends State<MoodOverTimeChart> {
     );
   }
 
-  List<LineChartBarData> _buildSegments(
-      List<FlSpot?> spots, Color color, bool smoothing) {
+  List<LineChartBarData> _buildSegments(List<FlSpot?> spots, Color color) {
     final segments = <LineChartBarData>[];
     var run = <FlSpot>[];
     for (final spot in spots) {
       if (spot != null) {
         run.add(spot);
       } else if (run.isNotEmpty) {
-        segments.add(_makeSegment(run, color, smoothing));
+        segments.add(_makeSegment(run, color));
         run = [];
       }
     }
-    if (run.isNotEmpty) segments.add(_makeSegment(run, color, smoothing));
+    if (run.isNotEmpty) segments.add(_makeSegment(run, color));
     return segments;
   }
 
-  LineChartBarData _makeSegment(
-      List<FlSpot> spots, Color color, bool smoothing) {
+  LineChartBarData _makeSegment(List<FlSpot> spots, Color color) {
     return LineChartBarData(
       spots: spots,
-      isCurved: smoothing,
+      isCurved: true,
       color: color,
       barWidth: 4,
       isStrokeCapRound: true,
       dotData: const FlDotData(show: false),
-      belowBarData: BarAreaData(
-        show: true,
-        gradient: LinearGradient(
-          colors: [
-            color.withValues(alpha: 0.35),
-            color.withValues(alpha: 0.0),
-          ],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
+      belowBarData: BarAreaData(show: false),
     );
   }
 

@@ -30,12 +30,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get pageHomeTitle => '主页';
 
   @override
-  String get jumpToMonthTitle => 'Jump to month';
-
-  @override
-  String get jumpToLogTitle => 'Jump to log';
-
-  @override
   String get flashbacksTitle => '往昔重现';
 
   @override
@@ -169,24 +163,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String chartOverTimeTitle(Object tag) {
     return '$tag 起伏';
   }
-
-  @override
-  String get chartGroupingLabel => 'Group by';
-
-  @override
-  String get chartGroupingDay => 'Day';
-
-  @override
-  String get chartGroupingWeek => 'Week';
-
-  @override
-  String get chartGroupingMonth => 'Month';
-
-  @override
-  String get chartGroupingYear => 'Year';
-
-  @override
-  String get chartSmoothingLabel => 'Smoothing';
 
   @override
   String streakCurrent(num count) {
@@ -626,10 +602,17 @@ class AppLocalizationsZh extends AppLocalizations {
   String get settingsConsiderSupporting => '考虑支持';
 
   @override
-  String get imagesTitle => '图像';
+  String get imagesTitle => 'Images';
 
   @override
   String get tagMoodTitle => '心情';
+
+  @override
+  String get templateDefaultDailyConnectionsTitle =>
+      'Daily Connections for BPD';
+
+  @override
+  String get templateDefaultDailyConnectionsBody => '';
 }
 
 /// The translations for Chinese, using the Han script (`zh_Hant`).

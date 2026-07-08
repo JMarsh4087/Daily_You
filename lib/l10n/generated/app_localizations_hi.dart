@@ -18,22 +18,16 @@ class AppLocalizationsHi extends AppLocalizations {
   String get dailyReminderDescription => 'अपना आज का दिन दर्ज करें…';
 
   @override
-  String get actionTakePhoto => 'फोटो लें';
+  String get actionTakePhoto => 'Take photo';
 
   @override
-  String get actionToday => 'आज';
+  String get actionToday => 'Today';
 
   @override
   String get actionOtherDay => 'Other day';
 
   @override
   String get pageHomeTitle => 'होम';
-
-  @override
-  String get jumpToMonthTitle => 'Jump to month';
-
-  @override
-  String get jumpToLogTitle => 'Jump to log';
 
   @override
   String get flashbacksTitle => 'फ्लैशबैक्स';
@@ -84,7 +78,7 @@ class AppLocalizationsHi extends AppLocalizations {
   }
 
   @override
-  String get flashbackOnThisDay => 'आज के दिन';
+  String get flashbackOnThisDay => 'On This Day';
 
   @override
   String get pageGalleryTitle => 'गैलरी';
@@ -132,10 +126,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String get sortDateTitle => 'दिनांक';
 
   @override
-  String get sortOrderAscendingTitle => 'बढ़ते हुए क्रम में';
+  String get sortOrderAscendingTitle => 'Ascending';
 
   @override
-  String get sortOrderDescendingTitle => 'घटते हुए क्रम में';
+  String get sortOrderDescendingTitle => 'Descending';
 
   @override
   String get pageStatisticsTitle => 'आंकड़े';
@@ -171,24 +165,6 @@ class AppLocalizationsHi extends AppLocalizations {
   }
 
   @override
-  String get chartGroupingLabel => 'Group by';
-
-  @override
-  String get chartGroupingDay => 'Day';
-
-  @override
-  String get chartGroupingWeek => 'Week';
-
-  @override
-  String get chartGroupingMonth => 'Month';
-
-  @override
-  String get chartGroupingYear => 'Year';
-
-  @override
-  String get chartSmoothingLabel => 'Smoothing';
-
-  @override
   String streakCurrent(num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -220,7 +196,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get errorExternalStorageAccessTitle =>
-      'बाहरी स्टोरेज एक्सेस नहीं कर सकते';
+      'Can\'t Access External Storage';
 
   @override
   String get errorExternalStorageAccessDescription =>
@@ -255,7 +231,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get pageSettingsTitle => 'सैटिंग्स';
 
   @override
-  String get settingsAppearanceTitle => 'दिखने में';
+  String get settingsAppearanceTitle => 'Appearance';
 
   @override
   String get settingsTheme => 'थीम';
@@ -270,22 +246,22 @@ class AppLocalizationsHi extends AppLocalizations {
   String get themeDark => 'डार्क';
 
   @override
-  String get themeAmoled => 'एमोलेड';
+  String get themeAmoled => 'AMOLED';
 
   @override
   String get settingsFirstDayOfWeek => 'सप्ताह का पहला दिन';
 
   @override
-  String get settingsCalendarSystem => 'कैलेंडर प्रकार';
+  String get settingsCalendarSystem => 'Calendar System';
 
   @override
-  String get calendarSystemGregorian => 'ग्रेगोरियन';
+  String get calendarSystemGregorian => 'Gregorian';
 
   @override
-  String get calendarSystemJalali => 'जलाली';
+  String get calendarSystemJalali => 'Jalali';
 
   @override
-  String get settingsUseSystemAccentColor => 'सिस्टम का निजी रंग उपयोग करें';
+  String get settingsUseSystemAccentColor => 'Use System Accent Color';
 
   @override
   String get settingsCustomAccentColor => 'Custom Accent Color';
@@ -641,4 +617,11 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get tagMoodTitle => 'Mood';
+
+  @override
+  String get templateDefaultDailyConnectionsTitle =>
+      'Daily Connections for BPD';
+
+  @override
+  String get templateDefaultDailyConnectionsBody => '';
 }

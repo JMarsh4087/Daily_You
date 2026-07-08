@@ -202,18 +202,6 @@ abstract class AppLocalizations {
   /// **'Home'**
   String get pageHomeTitle;
 
-  /// No description provided for @jumpToMonthTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Jump to month'**
-  String get jumpToMonthTitle;
-
-  /// No description provided for @jumpToLogTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Jump to log'**
-  String get jumpToLogTitle;
-
   /// No description provided for @flashbacksTitle.
   ///
   /// In en, this message translates to:
@@ -375,42 +363,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{tag} Over Time'**
   String chartOverTimeTitle(Object tag);
-
-  /// No description provided for @chartGroupingLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Group by'**
-  String get chartGroupingLabel;
-
-  /// No description provided for @chartGroupingDay.
-  ///
-  /// In en, this message translates to:
-  /// **'Day'**
-  String get chartGroupingDay;
-
-  /// No description provided for @chartGroupingWeek.
-  ///
-  /// In en, this message translates to:
-  /// **'Week'**
-  String get chartGroupingWeek;
-
-  /// No description provided for @chartGroupingMonth.
-  ///
-  /// In en, this message translates to:
-  /// **'Month'**
-  String get chartGroupingMonth;
-
-  /// No description provided for @chartGroupingYear.
-  ///
-  /// In en, this message translates to:
-  /// **'Year'**
-  String get chartGroupingYear;
-
-  /// No description provided for @chartSmoothingLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Smoothing'**
-  String get chartSmoothingLabel;
 
   /// No description provided for @streakCurrent.
   ///
@@ -1227,6 +1179,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Mood'**
   String get tagMoodTitle;
+
+  /// No description provided for @templateDefaultDailyConnectionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Connections for BPD'**
+  String get templateDefaultDailyConnectionsTitle;
+
+  /// No description provided for @templateDefaultDailyConnectionsBody.
+  ///
+  /// In en, this message translates to:
+  /// **''**
+  String get templateDefaultDailyConnectionsBody;
 }
 
 class _AppLocalizationsDelegate

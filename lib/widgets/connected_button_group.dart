@@ -113,14 +113,12 @@ class ConnectedButtonGroup extends StatelessWidget {
   final List<String> labels;
   final int selectedIndex;
   final ValueChanged<int> onSelectionChanged;
-  final MainAxisAlignment mainAxisAlignment;
 
   const ConnectedButtonGroup({
     super.key,
     required this.labels,
     required this.selectedIndex,
     required this.onSelectionChanged,
-    this.mainAxisAlignment = MainAxisAlignment.center,
   });
 
   @override
@@ -136,7 +134,7 @@ class ConnectedButtonGroup extends StatelessWidget {
             child: IntrinsicHeight(
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: mainAxisAlignment,
+                mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: List.generate(
                   labels.length,

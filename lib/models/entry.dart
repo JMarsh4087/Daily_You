@@ -1,14 +1,13 @@
 const String entriesTable = 'entries';
 
-const String deprecatedImgPath = 'img_path';
-
 class EntryFields {
-  static const List<String> values = [id, text, mood, timeCreate, timeModified];
+  static const List<String> values = [id, text, mood, timeCreate, timeModified, formData];
   static const String id = 'id';
   static const String text = 'text';
   static const String mood = 'mood';
   static const String timeCreate = 'time_create';
   static const String timeModified = 'time_modified';
+  static const String formData = 'form_data';   // ← new for analytics
 }
 
 class Entry {
@@ -17,6 +16,7 @@ class Entry {
   final int? mood;
   final DateTime timeCreate;
   final DateTime timeModified;
+  final Map<String, dynamic>? formData;   // ← new - stores Shame:3, Relief:1, emotions:["Confident","Lonely"], etc.
 
   const Entry({
     this.id,
@@ -24,23 +24,24 @@ class Entry {
     this.mood,
     required this.timeCreate,
     required this.timeModified,
+    this.formData,   // ← added
   });
-
-  static const _unset = Object();
 
   Entry copy({
     int? id,
     String? text,
-    Object? mood = _unset,
+    Object? mood = const Object(),
     DateTime? timeCreate,
     DateTime? timeModified,
+    Map<String, dynamic>? formData,   // ← added
   }) =>
       Entry(
         id: id ?? this.id,
         text: text ?? this.text,
-        mood: mood == _unset ? this.mood : mood as int?,
+        mood: mood == const Object() ? this.mood : mood as int?,
         timeCreate: timeCreate ?? this.timeCreate,
         timeModified: timeModified ?? this.timeModified,
+        formData: formData ?? this.formData,   // ← added
       );
 
   static Entry fromJson(Map<String, Object?> json) => Entry(
@@ -49,6 +50,7 @@ class Entry {
         mood: json[EntryFields.mood] as int?,
         timeCreate: DateTime.parse(json[EntryFields.timeCreate] as String),
         timeModified: DateTime.parse(json[EntryFields.timeModified] as String),
+        formData: json[EntryFields.formData] as Map<String, dynamic>?,
       );
 
   Map<String, Object?> toJson() => {
@@ -57,5 +59,6 @@ class Entry {
         EntryFields.mood: mood,
         EntryFields.timeCreate: timeCreate.toIso8601String(),
         EntryFields.timeModified: timeModified.toIso8601String(),
+        EntryFields.formData: formData,
       };
 }

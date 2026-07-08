@@ -63,9 +63,6 @@ class ConfigKey {
       "lastDismissedSupportBannerDate";
   static const String calendarShowMood = "calendarShowMood";
   static const String calendarSystem = "calendarSystem";
-  static const String moodOverTimeGrouping = "moodOverTimeGrouping";
-  static const String moodOverTimeSmoothing = "moodOverTimeSmoothing";
-  static const String statsRange = "statsRange";
   // Secure Configuration Values
   static const String requirePassword = "requirePassword";
   static const String biometricUnlock = "biometricUnlock";
@@ -140,9 +137,6 @@ class ConfigProvider with ChangeNotifier {
     ConfigKey.lastDismissedSupportBannerDate: null,
     ConfigKey.calendarShowMood: true,
     ConfigKey.calendarSystem: 'system',
-    ConfigKey.moodOverTimeGrouping: null,
-    ConfigKey.moodOverTimeSmoothing: true,
-    ConfigKey.statsRange: 'allTime',
   };
 
   final Map<String, dynamic> _secureConfig = {

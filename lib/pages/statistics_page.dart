@@ -1,4 +1,3 @@
-import 'package:daily_you/config_provider.dart';
 import 'package:daily_you/models/entry.dart';
 import 'package:daily_you/providers/entries_provider.dart';
 import 'package:daily_you/widgets/mood_by_day_chart.dart';
@@ -20,29 +19,8 @@ class StatsPage extends StatefulWidget {
 
 class _StatsPageState extends State<StatsPage>
     with AutomaticKeepAliveClientMixin {
-  late StatsRange statsRange;
+  StatsRange statsRange = StatsRange.allTime;
   List<Entry> entriesInRange = List.empty();
-
-  static const _rangeToString = {
-    StatsRange.month: 'month',
-    StatsRange.sixMonths: 'sixMonths',
-    StatsRange.year: 'year',
-    StatsRange.allTime: 'allTime',
-  };
-
-  static const _stringToRange = {
-    'month': StatsRange.month,
-    'sixMonths': StatsRange.sixMonths,
-    'year': StatsRange.year,
-    'allTime': StatsRange.allTime,
-  };
-
-  @override
-  void initState() {
-    super.initState();
-    final saved = ConfigProvider.instance.get(ConfigKey.statsRange) as String?;
-    statsRange = _stringToRange[saved] ?? StatsRange.allTime;
-  }
 
   @override
   bool get wantKeepAlive => true;
@@ -117,8 +95,6 @@ class _StatsPageState extends State<StatsPage>
                 setState(() {
                   statsRange = newSelection;
                 });
-                ConfigProvider.instance.set(
-                    ConfigKey.statsRange, _rangeToString[newSelection]);
               },
             ),
           ),

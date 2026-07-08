@@ -18,22 +18,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String get dailyReminderDescription => 'Faça o seu registo diário…';
 
   @override
-  String get actionTakePhoto => 'Tire uma foto';
+  String get actionTakePhoto => 'Take photo';
 
   @override
-  String get actionToday => 'Hoje';
+  String get actionToday => 'Today';
 
   @override
-  String get actionOtherDay => 'Outro dia';
+  String get actionOtherDay => 'Other day';
 
   @override
   String get pageHomeTitle => 'Início';
-
-  @override
-  String get jumpToMonthTitle => 'Jump to month';
-
-  @override
-  String get jumpToLogTitle => 'Jump to log';
 
   @override
   String get flashbacksTitle => 'Recordações';
@@ -169,24 +163,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String chartOverTimeTitle(Object tag) {
     return '$tag Over Time';
   }
-
-  @override
-  String get chartGroupingLabel => 'Group by';
-
-  @override
-  String get chartGroupingDay => 'Day';
-
-  @override
-  String get chartGroupingWeek => 'Week';
-
-  @override
-  String get chartGroupingMonth => 'Month';
-
-  @override
-  String get chartGroupingYear => 'Year';
-
-  @override
-  String get chartSmoothingLabel => 'Smoothing';
 
   @override
   String streakCurrent(num count) {
@@ -644,6 +620,13 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get tagMoodTitle => 'Humor';
+
+  @override
+  String get templateDefaultDailyConnectionsTitle =>
+      'Daily Connections for BPD';
+
+  @override
+  String get templateDefaultDailyConnectionsBody => '';
 }
 
 /// The translations for Portuguese, as used in Brazil (`pt_BR`).

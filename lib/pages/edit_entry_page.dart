@@ -19,6 +19,8 @@ import 'package:daily_you/models/entry.dart';
 import 'package:daily_you/widgets/entry_image_picker.dart';
 import 'package:daily_you/widgets/entry_text_edit.dart';
 import 'package:daily_you/widgets/entry_mood_picker.dart';
+import 'package:daily_you/widgets/interactive_template_form.dart';
+import 'package:daily_you/models/template.dart';
 
 class AddEditEntryPage extends StatefulWidget {
   final Entry? entry;
@@ -58,6 +60,7 @@ class _AddEditEntryPageState extends State<AddEditEntryPage>
   bool _savingEntry = false;
   bool _newEntry = false;
   bool _creatingNewEntry = false;
+  Template? selectedTemplate;
   Timer? _debounceTimer;
 
   Future<void> _initEntry() async {
@@ -70,6 +73,7 @@ class _AddEditEntryPageState extends State<AddEditEntryPage>
       final defaultTemplate = TemplatesProvider.instance.getDefaultTemplate();
       if (defaultTemplate != null) {
         text = defaultTemplate.text ?? "";
+        selectedTemplate = defaultTemplate;
       }
       _entry = Entry(
         text: text,
@@ -352,17 +356,32 @@ class _AddEditEntryPageState extends State<AddEditEntryPage>
                                       ),
                                     ),
                                   ),
-                                  StatefulBuilder(
-                                      builder: (context, setState) =>
-                                          EntryTextEditor(
-                                            text: text,
-                                            focusNode: _focusNode,
-                                            textEditingController:
-                                                _textEditingController,
-                                            undoHistoryController:
-                                                _undoController,
-                                            onExpand: _openFullScreenEditor,
-                                          )),
+                                      StatefulBuilder(
+                                        builder: (context, setState) => Column(
+                                          children: [
+                                            // Interactive Form
+                                            selectedTemplate?.formJson != null
+                                                ? InteractiveTemplateForm(
+                                                    formJson: selectedTemplate!.formJson!,
+                                                    editorController: _textEditingController,
+                                                    entry: _entry,
+                                                    onSaved: () => setState(() {}),   // refreshes the UI
+                                                  )
+                                                : const SizedBox(height: 0),
+
+                                            const SizedBox(height: 12),
+
+                                            // The original text editor
+                                            EntryTextEditor(
+                                              text: text,
+                                              focusNode: _focusNode,
+                                              textEditingController: _textEditingController,
+                                              undoHistoryController: _undoController,
+                                              onExpand: _openFullScreenEditor,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                   const SizedBox(height: 16),
                                 ],
                               ),

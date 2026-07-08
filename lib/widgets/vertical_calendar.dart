@@ -478,45 +478,17 @@ class _VerticalCalendarState extends State<VerticalCalendar>
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                PopupMenuButton<String>(
-                  icon: Icon(Icons.calendar_month_rounded,
-                      color: theme.colorScheme.primary),
+                IconButton(
+                  onPressed: () => _onMonthLabelTap(context),
+                  icon: const Icon(Icons.calendar_month_rounded),
+                  color: theme.colorScheme.primary,
                   padding: const EdgeInsets.all(8),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16)),
-                  itemBuilder: (context) => [
-                    PopupMenuItem<String>(
-                      value: 'month',
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.calendar_month_rounded,
-                              color: theme.colorScheme.primary),
-                          const SizedBox(width: 8),
-                          Text(l10n.jumpToMonthTitle),
-                        ],
-                      ),
-                    ),
-                    PopupMenuItem<String>(
-                      value: 'log',
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(Icons.event_rounded,
-                              color: theme.colorScheme.primary),
-                          const SizedBox(width: 8),
-                          Text(l10n.jumpToLogTitle),
-                        ],
-                      ),
-                    ),
-                  ],
-                  onSelected: (value) {
-                    if (value == 'month') {
-                      _onMonthLabelTap(context);
-                    } else {
-                      _onCalendarIconTap(context);
-                    }
-                  },
+                ),
+                IconButton(
+                  onPressed: () => _onCalendarIconTap(context),
+                  icon: Icon(Icons.event_rounded),
+                  color: theme.colorScheme.primary,
+                  padding: const EdgeInsets.all(8),
                 ),
                 PopupMenuButton<String>(
                   icon: Icon(Icons.visibility_rounded,

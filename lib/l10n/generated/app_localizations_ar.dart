@@ -30,12 +30,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get pageHomeTitle => 'الرئيسية';
 
   @override
-  String get jumpToMonthTitle => 'Jump to month';
-
-  @override
-  String get jumpToLogTitle => 'Jump to log';
-
-  @override
   String get flashbacksTitle => 'الذكريات';
 
   @override
@@ -173,24 +167,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String chartOverTimeTitle(Object tag) {
     return '$tag بمرور الوقت';
   }
-
-  @override
-  String get chartGroupingLabel => 'Group by';
-
-  @override
-  String get chartGroupingDay => 'Day';
-
-  @override
-  String get chartGroupingWeek => 'Week';
-
-  @override
-  String get chartGroupingMonth => 'Month';
-
-  @override
-  String get chartGroupingYear => 'Year';
-
-  @override
-  String get chartSmoothingLabel => 'Smoothing';
 
   @override
   String streakCurrent(num count) {
@@ -645,4 +621,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tagMoodTitle => 'المزاج';
+
+  @override
+  String get templateDefaultDailyConnectionsTitle =>
+      'Daily Connections for BPD';
+
+  @override
+  String get templateDefaultDailyConnectionsBody => '';
 }

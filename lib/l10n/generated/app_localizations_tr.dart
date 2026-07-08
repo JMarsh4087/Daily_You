@@ -24,16 +24,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get actionToday => 'Bugün';
 
   @override
-  String get actionOtherDay => 'Başka gün';
+  String get actionOtherDay => 'Other day';
 
   @override
   String get pageHomeTitle => 'Ana';
-
-  @override
-  String get jumpToMonthTitle => 'Jump to month';
-
-  @override
-  String get jumpToLogTitle => 'Jump to log';
 
   @override
   String get flashbacksTitle => 'Geçmiş';
@@ -167,26 +161,8 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String chartOverTimeTitle(Object tag) {
-    return '$tag zaman içerisinde';
+    return '$tag Over Time';
   }
-
-  @override
-  String get chartGroupingLabel => 'Group by';
-
-  @override
-  String get chartGroupingDay => 'Day';
-
-  @override
-  String get chartGroupingWeek => 'Week';
-
-  @override
-  String get chartGroupingMonth => 'Month';
-
-  @override
-  String get chartGroupingYear => 'Year';
-
-  @override
-  String get chartSmoothingLabel => 'Smoothing';
 
   @override
   String streakCurrent(num count) {
@@ -276,13 +252,13 @@ class AppLocalizationsTr extends AppLocalizations {
   String get settingsFirstDayOfWeek => 'Haftanın ilk günü';
 
   @override
-  String get settingsCalendarSystem => 'Takvim Sistemi';
+  String get settingsCalendarSystem => 'Calendar System';
 
   @override
-  String get calendarSystemGregorian => 'Gregoryen';
+  String get calendarSystemGregorian => 'Gregorian';
 
   @override
-  String get calendarSystemJalali => 'Celali';
+  String get calendarSystemJalali => 'Jalali';
 
   @override
   String get settingsUseSystemAccentColor => 'Sistem vurgu rengini kullan';
@@ -312,10 +288,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get settingsHideImagesInGallery => 'Görüntüleri galeride gizle';
 
   @override
-  String get settingsHideImages => 'Resimleri gizle';
+  String get settingsHideImages => 'Hide Images';
 
   @override
-  String get pageCalendarTitle => 'Takvim';
+  String get pageCalendarTitle => 'Calendar';
 
   @override
   String get viewLayoutList => 'Liste';
@@ -338,7 +314,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get settingsDailyReminderTitle => 'Günlük Hatırlatma';
 
   @override
-  String get settingsOnThisDayDescription => 'Geçmiş anılarını ziyaret et';
+  String get settingsOnThisDayDescription => 'Revisit past memories';
 
   @override
   String get settingsDailyReminderDescription => 'Her gün nazik bir hatırlatma';
@@ -640,4 +616,11 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get tagMoodTitle => 'Ruh hali';
+
+  @override
+  String get templateDefaultDailyConnectionsTitle =>
+      'Daily Connections for BPD';
+
+  @override
+  String get templateDefaultDailyConnectionsBody => '';
 }

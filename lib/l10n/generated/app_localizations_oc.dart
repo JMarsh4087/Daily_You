@@ -30,12 +30,6 @@ class AppLocalizationsOc extends AppLocalizations {
   String get pageHomeTitle => 'Acuèlh';
 
   @override
-  String get jumpToMonthTitle => 'Jump to month';
-
-  @override
-  String get jumpToLogTitle => 'Jump to log';
-
-  @override
   String get flashbacksTitle => 'Retorn enrèire';
 
   @override
@@ -169,24 +163,6 @@ class AppLocalizationsOc extends AppLocalizations {
   String chartOverTimeTitle(Object tag) {
     return '$tag Over Time';
   }
-
-  @override
-  String get chartGroupingLabel => 'Group by';
-
-  @override
-  String get chartGroupingDay => 'Day';
-
-  @override
-  String get chartGroupingWeek => 'Week';
-
-  @override
-  String get chartGroupingMonth => 'Month';
-
-  @override
-  String get chartGroupingYear => 'Year';
-
-  @override
-  String get chartSmoothingLabel => 'Smoothing';
 
   @override
   String streakCurrent(num count) {
@@ -642,4 +618,11 @@ class AppLocalizationsOc extends AppLocalizations {
 
   @override
   String get tagMoodTitle => 'Umor';
+
+  @override
+  String get templateDefaultDailyConnectionsTitle =>
+      'Daily Connections for BPD';
+
+  @override
+  String get templateDefaultDailyConnectionsBody => '';
 }

@@ -19,22 +19,16 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non dimenticare di tener traccia della tua giornata…';
 
   @override
-  String get actionTakePhoto => 'Scatta foto';
+  String get actionTakePhoto => 'Take photo';
 
   @override
-  String get actionToday => 'Oggi';
+  String get actionToday => 'Today';
 
   @override
-  String get actionOtherDay => 'Altro giorno';
+  String get actionOtherDay => 'Other day';
 
   @override
   String get pageHomeTitle => 'Home';
-
-  @override
-  String get jumpToMonthTitle => 'Jump to month';
-
-  @override
-  String get jumpToLogTitle => 'Jump to log';
 
   @override
   String get flashbacksTitle => 'Ricordi';
@@ -85,7 +79,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get flashbackOnThisDay => 'Accade Oggi';
+  String get flashbackOnThisDay => 'On This Day';
 
   @override
   String get pageGalleryTitle => 'Galleria';
@@ -109,8 +103,8 @@ class AppLocalizationsIt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count giorni',
-      one: '$count giorno',
+      other: '$count days',
+      one: '$count day',
     );
     return '$_temp0';
   }
@@ -168,26 +162,8 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String chartOverTimeTitle(Object tag) {
-    return '$tag nel tempo';
+    return '$tag Over Time';
   }
-
-  @override
-  String get chartGroupingLabel => 'Group by';
-
-  @override
-  String get chartGroupingDay => 'Day';
-
-  @override
-  String get chartGroupingWeek => 'Week';
-
-  @override
-  String get chartGroupingMonth => 'Month';
-
-  @override
-  String get chartGroupingYear => 'Year';
-
-  @override
-  String get chartSmoothingLabel => 'Smoothing';
 
   @override
   String streakCurrent(num count) {
@@ -281,7 +257,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get settingsCalendarSystem => 'Calendar System';
 
   @override
-  String get calendarSystemGregorian => 'Gregoriano';
+  String get calendarSystemGregorian => 'Gregorian';
 
   @override
   String get calendarSystemJalali => 'Jalali';
@@ -317,10 +293,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Nascondi le immagini nella galleria';
 
   @override
-  String get settingsHideImages => 'Nascondi immagini';
+  String get settingsHideImages => 'Hide Images';
 
   @override
-  String get pageCalendarTitle => 'Calendario';
+  String get pageCalendarTitle => 'Calendar';
 
   @override
   String get viewLayoutList => 'Elenco';
@@ -343,7 +319,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get settingsDailyReminderTitle => 'Promemoria Giornaliero';
 
   @override
-  String get settingsOnThisDayDescription => 'Rivisita ricordi passati';
+  String get settingsOnThisDayDescription => 'Revisit past memories';
 
   @override
   String get settingsDailyReminderDescription =>
@@ -391,7 +367,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get noTemplatesDescription => 'Nessun modello ancora creato…';
 
   @override
-  String get templateVariableTime => 'Orario';
+  String get templateVariableTime => 'Time';
 
   @override
   String get templateDefaultTimestampTitle => 'Timestamp';
@@ -402,18 +378,17 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get templateDefaultSummaryTitle => 'Riassunto Giornata';
+  String get templateDefaultSummaryTitle => 'Day Summary';
 
   @override
-  String get templateDefaultSummaryBody =>
-      '### Riepilogo\n- \n\n### Citazione\n> ';
+  String get templateDefaultSummaryBody => '### Summary\n- \n\n### Quote\n> ';
 
   @override
-  String get templateDefaultReflectionTitle => 'Riflessione';
+  String get templateDefaultReflectionTitle => 'Reflection';
 
   @override
   String get templateDefaultReflectionBody =>
-      '### Che cosa ho apprezzato di oggi?\n- \n### Per cosa sono grato?\n- \n### Cosa mi aspetto di fare prossimamente?\n- ';
+      '### What did you enjoy about today?\n- \n\n### What are you thankful for?\n- \n\n### What are you looking forward to?\n- ';
 
   @override
   String get settingsStorageTitle => 'Memoria';
@@ -651,4 +626,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get tagMoodTitle => 'Stato d\'animo';
+
+  @override
+  String get templateDefaultDailyConnectionsTitle =>
+      'Daily Connections for BPD';
+
+  @override
+  String get templateDefaultDailyConnectionsBody => '';
 }

@@ -30,19 +30,13 @@ class AppLocalizationsFa extends AppLocalizations {
   String get pageHomeTitle => 'خانه';
 
   @override
-  String get jumpToMonthTitle => 'Jump to month';
-
-  @override
-  String get jumpToLogTitle => 'Jump to log';
-
-  @override
-  String get flashbacksTitle => 'فلش بک';
+  String get flashbacksTitle => 'فلش بک ها';
 
   @override
   String get settingsFlashbacksExcludeBadDays => 'مستثنی کردن روزهای بد';
 
   @override
-  String get flaskbacksEmpty => 'هیچ فلش بکی وجود ندارد…';
+  String get flaskbacksEmpty => 'هنوز هیچ فلش بکی وجود ندارد…';
 
   @override
   String get flashbackGoodDay => 'یک روز خوب';
@@ -90,7 +84,7 @@ class AppLocalizationsFa extends AppLocalizations {
   String get pageGalleryTitle => 'گالری';
 
   @override
-  String get searchLogsHint => 'تاریخچه جستجوها…';
+  String get searchLogsHint => 'جستوجوی گزارش ها…';
 
   @override
   String logCount(num count) {
@@ -126,7 +120,7 @@ class AppLocalizationsFa extends AppLocalizations {
   }
 
   @override
-  String get noLogs => 'تاریخچه ای وجود ندارد…';
+  String get noLogs => 'هیچ گزارشی وجود ندارد…';
 
   @override
   String get sortDateTitle => 'تاریخ';
@@ -169,24 +163,6 @@ class AppLocalizationsFa extends AppLocalizations {
   String chartOverTimeTitle(Object tag) {
     return '$tag در طول زمان';
   }
-
-  @override
-  String get chartGroupingLabel => 'Group by';
-
-  @override
-  String get chartGroupingDay => 'Day';
-
-  @override
-  String get chartGroupingWeek => 'Week';
-
-  @override
-  String get chartGroupingMonth => 'Month';
-
-  @override
-  String get chartGroupingYear => 'Year';
-
-  @override
-  String get chartSmoothingLabel => 'Smoothing';
 
   @override
   String streakCurrent(num count) {
@@ -239,10 +215,10 @@ class AppLocalizationsFa extends AppLocalizations {
   String get titleHint => 'عنوان…';
 
   @override
-  String get deleteLogTitle => 'حذف تاریخچه';
+  String get deleteLogTitle => 'حذف گزارش';
 
   @override
-  String get deleteLogDescription => 'ایا میخواهید این تاریچه را پاک کنید؟';
+  String get deleteLogDescription => 'ایا میخواهید این گزارش را حذف کنید؟';
 
   @override
   String get deletePhotoTitle => 'حذف عکس';
@@ -257,7 +233,7 @@ class AppLocalizationsFa extends AppLocalizations {
   String get settingsAppearanceTitle => 'ظاهر';
 
   @override
-  String get settingsTheme => '‏تم';
+  String get settingsTheme => 'تم';
 
   @override
   String get themeSystem => 'سیستم';
@@ -272,7 +248,7 @@ class AppLocalizationsFa extends AppLocalizations {
   String get themeAmoled => 'امولد';
 
   @override
-  String get settingsFirstDayOfWeek => 'روز اول هفته';
+  String get settingsFirstDayOfWeek => 'اولین روز هفته';
 
   @override
   String get settingsCalendarSystem => 'سیستم تقویم';
@@ -639,4 +615,11 @@ class AppLocalizationsFa extends AppLocalizations {
 
   @override
   String get tagMoodTitle => 'حس و حال';
+
+  @override
+  String get templateDefaultDailyConnectionsTitle =>
+      'Daily Connections for BPD';
+
+  @override
+  String get templateDefaultDailyConnectionsBody => '';
 }

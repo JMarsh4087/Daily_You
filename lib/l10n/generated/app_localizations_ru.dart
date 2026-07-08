@@ -21,19 +21,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get actionTakePhoto => 'Сделать фото';
 
   @override
-  String get actionToday => 'Сегодня';
+  String get actionToday => 'Today';
 
   @override
-  String get actionOtherDay => 'Другой день';
+  String get actionOtherDay => 'Other day';
 
   @override
   String get pageHomeTitle => 'Дом';
-
-  @override
-  String get jumpToMonthTitle => 'Jump to month';
-
-  @override
-  String get jumpToLogTitle => 'Jump to log';
 
   @override
   String get flashbacksTitle => 'Воспоминания';
@@ -173,24 +167,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String chartOverTimeTitle(Object tag) {
     return '$tag Over Time';
   }
-
-  @override
-  String get chartGroupingLabel => 'Group by';
-
-  @override
-  String get chartGroupingDay => 'Day';
-
-  @override
-  String get chartGroupingWeek => 'Week';
-
-  @override
-  String get chartGroupingMonth => 'Month';
-
-  @override
-  String get chartGroupingYear => 'Year';
-
-  @override
-  String get chartSmoothingLabel => 'Smoothing';
 
   @override
   String streakCurrent(num count) {
@@ -650,4 +626,11 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get tagMoodTitle => 'Настроение';
+
+  @override
+  String get templateDefaultDailyConnectionsTitle =>
+      'Daily Connections for BPD';
+
+  @override
+  String get templateDefaultDailyConnectionsBody => '';
 }

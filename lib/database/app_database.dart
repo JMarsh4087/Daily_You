@@ -235,40 +235,43 @@ class AppDatabase {
 
   // SQLite Database Actions
 
-  Future _createDatabase(Database db, int version) async {
-    _database = db;
-    await db.execute('''
+Future _createDatabase(Database db, int version) async {
+  _database = db;
+  await db.execute('''
 CREATE TABLE $entriesTable (
   ${EntryFields.id} INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   ${EntryFields.text} TEXT NOT NULL,
   ${EntryFields.mood} INTEGER,
   ${EntryFields.timeCreate} DATETIME NOT NULL DEFAULT (DATETIME('now')),
-  ${EntryFields.timeModified} DATETIME NOT NULL DEFAULT (DATETIME('now'))
+  ${EntryFields.timeModified} DATETIME NOT NULL DEFAULT (DATETIME('now')),
+  ${EntryFields.formData} TEXT
 )
 ''');
-    await db.execute('''
+
+  await db.execute('''
 CREATE TABLE $templatesTable (
   ${TemplatesFields.id} INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   ${TemplatesFields.name} TEXT NOT NULL,
   ${TemplatesFields.text} TEXT,
+  ${TemplatesFields.formJson} TEXT,
   ${TemplatesFields.timeCreate} DATETIME NOT NULL DEFAULT (DATETIME('now')),
   ${TemplatesFields.timeModified} DATETIME NOT NULL DEFAULT (DATETIME('now'))
 )
 ''');
 
-    await TemplatesProvider.instance.createDefaultTemplates();
+  await TemplatesProvider.instance.createDefaultTemplates();
 
-    await db.execute('''
+  await db.execute('''
 CREATE TABLE $imagesTable (
-    ${EntryImageFields.id} INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    ${EntryImageFields.entryId} INTEGER NOT NULL,
-    ${EntryImageFields.imgPath} TEXT NOT NULL,
-    ${EntryImageFields.imgRank} INTEGER NOT NULL,
-    ${EntryImageFields.timeCreate} DATETIME NOT NULL DEFAULT (DATETIME('now')),
-    FOREIGN KEY (${EntryImageFields.entryId}) REFERENCES $entriesTable (id)
+  ${EntryImageFields.id} INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  ${EntryImageFields.entryId} INTEGER NOT NULL,
+  ${EntryImageFields.imgPath} TEXT NOT NULL,
+  ${EntryImageFields.imgRank} INTEGER NOT NULL,
+  ${EntryImageFields.timeCreate} DATETIME NOT NULL DEFAULT (DATETIME('now')),
+  FOREIGN KEY (${EntryImageFields.entryId}) REFERENCES $entriesTable (id)
 )
 ''');
-  }
+}
 
   void _onUpgrade(Database db, int oldVersion, int newVersion) async {
     _database = db;
@@ -286,24 +289,26 @@ CREATE TABLE $templatesTable (
 
       await TemplatesProvider.instance.createDefaultTemplates();
     }
-    if (oldVersion <= 2) {
-      await db.execute('''
-CREATE TABLE $imagesTable (
-    ${EntryImageFields.id} INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    ${EntryImageFields.entryId} INTEGER NOT NULL,
-    ${EntryImageFields.imgPath} TEXT NOT NULL,
-    ${EntryImageFields.imgRank} INTEGER NOT NULL,
-    ${EntryImageFields.timeCreate} DATETIME NOT NULL DEFAULT (DATETIME('now')),
-    FOREIGN KEY (${EntryImageFields.entryId}) REFERENCES $entriesTable (id)
-)
-''');
+      if (oldVersion <= 2) {
+        await db.execute('''
+          CREATE TABLE $imagesTable (
+            ${EntryImageFields.id} INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            ${EntryImageFields.entryId} INTEGER NOT NULL,
+            ${EntryImageFields.imgPath} TEXT NOT NULL,
+            ${EntryImageFields.imgRank} INTEGER NOT NULL,
+            ${EntryImageFields.timeCreate} DATETIME NOT NULL DEFAULT (DATETIME('now')),
+            FOREIGN KEY (${EntryImageFields.entryId}) REFERENCES $entriesTable (id)
+          )
+        ''');
       await db.transaction((txn) async {
-        await txn.execute('''
--- Step 1: Insert the non-null imgPath entries into the imagesTable
-INSERT INTO $imagesTable (${EntryImageFields.entryId}, ${EntryImageFields.imgPath}, ${EntryImageFields.imgRank}, ${EntryImageFields.timeCreate})
-SELECT ${EntryFields.id}, $deprecatedImgPath, 0, ${EntryFields.timeCreate}
-FROM $entriesTable
-WHERE $deprecatedImgPath IS NOT NULL;
+      await txn.execute('''
+      -- Step 1: Insert the non-null imgPath entries into the imagesTable
+      INSERT INTO $imagesTable 
+        (${EntryImageFields.entryId}, ${EntryImageFields.imgPath}, ${EntryImageFields.imgRank}, ${EntryImageFields.timeCreate})
+      SELECT 
+        ${EntryFields.id}, imgPath, 0, ${EntryFields.timeCreate}
+      FROM $entriesTable
+      WHERE imgPath IS NOT NULL;
     ''');
 
         await txn.execute('''
@@ -314,18 +319,23 @@ ALTER TABLE $entriesTable RENAME TO old_entries;
         await txn.execute('''
 -- Step 3: Create a new entries table without the imgPath field
 CREATE TABLE $entriesTable (
-  ${EntryFields.id} INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  ${EntryFields.text} TEXT NOT NULL,
-  ${EntryFields.mood} INTEGER,
-  ${EntryFields.timeCreate} DATETIME NOT NULL DEFAULT (DATETIME('now')),
-  ${EntryFields.timeModified} DATETIME NOT NULL DEFAULT (DATETIME('now'))
-);
+        ${EntryFields.id} INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+        ${EntryFields.text} TEXT NOT NULL,
+        ${EntryFields.mood} INTEGER,
+        ${EntryFields.timeCreate} DATETIME NOT NULL DEFAULT (DATETIME('now')),
+        ${EntryFields.timeModified} DATETIME NOT NULL DEFAULT (DATETIME('now')),
+        ${EntryFields.formData} TEXT
+      )
     ''');
 
         await txn.execute('''
 -- Step 4: Copy data from the old entries table to the new one
-INSERT INTO $entriesTable (${EntryFields.id}, ${EntryFields.text}, ${EntryFields.mood}, ${EntryFields.timeCreate}, ${EntryFields.timeModified})
-SELECT ${EntryFields.id}, ${EntryFields.text}, ${EntryFields.mood}, ${EntryFields.timeCreate}, ${EntryFields.timeModified}
+INSERT INTO $entriesTable 
+        (${EntryFields.id}, ${EntryFields.text}, ${EntryFields.mood}, 
+         ${EntryFields.timeCreate}, ${EntryFields.timeModified}, ${EntryFields.formData})
+      SELECT 
+        ${EntryFields.id}, ${EntryFields.text}, ${EntryFields.mood}, 
+        ${EntryFields.timeCreate}, ${EntryFields.timeModified}, ${EntryFields.formData}
 FROM old_entries;
     ''');
 
