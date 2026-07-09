@@ -79,20 +79,42 @@ class TemplatesProvider with ChangeNotifier {
           timeCreate: DateTime.now(),
           timeModified: DateTime.now()),
       Template(
-          name: l10n.templateDefaultDailyConnectionsTitle,
-          text: l10n.templateDefaultDailyConnectionsBody,  // keeps your nice Markdown as fallback
-          formJson: '''
-      [
-        {"type":"text","label":"Interaction (Who did you connect with today? What happened? Write 1-3 sentences.)"},
-        {"type":"rating","label":"Shame"},
-        {"type":"rating","label":"Relief"},
-        {"type":"rating","label":"Fear"},
-        {"type":"rating","label":"Anger"},
-        {"type":"multiselect","label":"Other emotions","options":["Accepted","Affectionate","Alive","Amused","Attractive","Beautiful","Blameless","Brave","Calm","Capable","Caring","Cheerful","Cherished","Comfortable","Comforted","Competent","Concerned","Confident","Content","Courageous","Curious","Delighted","Desirable","Eager","Excited","Flattered","Forgiving","Friendly","Fulfilled","Generous","Glad","Good","Grateful","Great","Happy","Honored","Hopeful","Humorous","Interested","Joyful","Lovable","Loving","Loyal","Passionate","Peaceful","Playful","Pleased","Powerful","Proud","Quiet","Relaxed","Relieved","Respected","Satisfied","Safe","Secure","Self-reliant","Sexy","Silly","Special","Strong","Supportive","Surprised","Sympathetic","Tender","Trusted","Trusting","Understood","Warm","Welcomed","Abandoned","Afraid","Alone","Angry","Annoyed","Apprehensive","Ashamed","Betrayed","Bitter","Blamed","Contempt","Defeated","Dependent","Despairing","Desperate","Disappointed","Disbelief","Discouraged","Disgust","Distrust","Embarrassed","Empty","Evil","Fearful","Foolish","Frantic","Frustrated","Furious","Guilty","Hateful","Helpless","Hesitant","Hopeless","Horrified","Humiliated","Hurt","Impatient","Inadequate","Incompetent","Indebted","Indecisive","Inferior","Inhibited","Insecure","Intruded","Irresponsible","Irritated","Jealous","Let down","Lonely","Mad","Misunderstood","Needy","Rage","Rejected","Responsible","Sad","Scared","Sleazy","Sorry","Touchy","Trapped","Ugly","Unappreciated","Uncertain","Unfulfilled","Unsafe","Worried","Worthless"]}
-      ]
-      ''',
-          timeCreate: DateTime.now(),
-          timeModified: DateTime.now()),
+  name: l10n.templateDefaultDailyConnectionsTitle,
+  text: l10n.templateDefaultDailyConnectionsBody, // keeps Markdown as fallback
+  formJson: '''
+    [
+      {"type":"text","label":"Interaction"},
+      {"type":"rating","label":"Shame"},
+      {"type":"rating","label":"Relief"},
+      {"type":"rating","label":"Fear"},
+      {"type":"rating","label":"Anger"},
+      {"type":"multiselect","label":"Other emotions","options":[
+        "❌ Abandoned","✅ Accepted","✅ Affectionate","❌ Afraid","✅ Alive","✅ Amused","✅ Attractive",
+        "✅ Beautiful","❌ Betrayed","❌ Bitter","✅ Blameless","❌ Blamed","✅ Brave","✅ Calm",
+        "✅ Capable","✅ Caring","✅ Cheerful","✅ Cherished","✅ Comfortable","✅ Comforted","✅ Competent",
+        "✅ Concerned","✅ Confident","❌ Contempt","✅ Content","✅ Courageous","✅ Curious","❌ Cruel",
+        "✅ Delighted","✅ Desirable","❌ Defeated","❌ Dependent","❌ Despairing","❌ Desperate","✅ Eager",
+        "❌ Disappointed","❌ Disbelief","❌ Discouraged","❌ Disgust","❌ Distrust","✅ Excited","❌ Embarrassed",
+        "❌ Empty","❌ Evil","❌ Fearful","✅ Flattered","✅ Forgiving","❌ Foolish","✅ Friendly",
+        "❌ Frantic","❌ Frustrated","❌ Furious","✅ Fulfilled","✅ Generous","✅ Glad","✅ Good",
+        "✅ Grateful","✅ Great","❌ Guilty","✅ Happy","❌ Hateful","❌ Helpless","❌ Hesitant",
+        "✅ Honored","✅ Hopeful","❌ Hopeless","❌ Horrified","✅ Humorous","❌ Humiliated","❌ Hurt",
+        "✅ Interested","❌ Impatient","❌ Inadequate","❌ Incompetent","❌ Indebted","❌ Indecisive","❌ Inferior",
+        "❌ Inhibited","❌ Insecure","❌ Intruded","❌ Irresponsible","❌ Irritated","✅ Joyful","❌ Jealous",
+        "✅ Lovable","✅ Loving","✅ Loyal","❌ Let down","❌ Lonely","❌ Mad","❌ Malevolent",
+        "❌ Misunderstood","❌ Needy","❌ Out-of-Body","✅ Passionate","✅ Peaceful","✅ Playful","✅ Pleased",
+        "✅ Powerful","✅ Proud","✅ Quiet","❌ Rage","✅ Relaxed","✅ Relieved","❌ Rejected",
+        "✅ Respected","❌ Responsible","✅ Safe","❌ Sad","✅ Satisfied","❌ Scared","✅ Secure",
+        "✅ Self-reliant","✅ Sexy","✅ Silly","✅ Special","❌ Sleazy","❌ Sorry","✅ Strong",
+        "✅ Supportive","✅ Surprised","✅ Sympathetic","✅ Tender","❌ Touchy","❌ Trapped","✅ Trusted",
+        "✅ Trusting","✅ Understood","❌ Ugly","❌ Unappreciated","❌ Uncertain","❌ Unfulfilled","❌ Unheard",
+        "❌ Unsafe","✅ Warm","✅ Welcomed","❌ Worried","❌ Worthless"
+      ]}
+    ]
+    ''',
+  timeCreate: DateTime.now(),
+  timeModified: DateTime.now(),
+),
     ];
 
     for (final template in defaultTemplates) {

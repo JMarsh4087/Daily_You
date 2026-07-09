@@ -31,14 +31,14 @@ class TemplateVariableButton extends StatelessWidget {
     return PopupMenuButton<String>(
       icon:
           Icon(Icons.add_rounded, color: Theme.of(context).colorScheme.primary),
-      iconSize: 24,
+      iconSize: 12,
       style: IconButton.styleFrom(
         backgroundColor: Theme.of(context)
             .colorScheme
-            .primaryContainer, // Your background color
+            .primaryContainer,
       ),
-      padding: const EdgeInsets.all(8),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      padding: const EdgeInsets.all(4),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       onSelected: (String newValue) {
         _addVariableToText(context, newValue);
       },
